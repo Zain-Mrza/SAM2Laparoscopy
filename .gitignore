@@ -1,3 +1,8 @@
 # pixi environments
-.pixi/*
+.pixi/
 !.pixi/config.toml
+pixi.lock
+
+__pycache__
+
+.gitattributes
