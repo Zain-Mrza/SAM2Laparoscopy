@@ -1,0 +1,17 @@
+[workspace]
+authors = ["Zain-Mrza <zzmirzazz@aol.com>"]
+channels = ["conda-forge"]
+name = "sam2laparoscopy"
+platforms = ["win-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.12.*"
+ipykernel = ">=7.1.0,<8"
+pip = ">=25.2,<26"
+
+[pypi-dependencies]
+torch = { version = ">=2.9.0", index = "https://download.pytorch.org/whl/cpu" }
+torchvision = { version = ">=0.24.0", index = "https://download.pytorch.org/whl/cpu" }
