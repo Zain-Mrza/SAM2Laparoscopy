@@ -7,11 +7,19 @@ version = "0.1.0"
 
 [tasks]
 
+[system-requirements]
+cuda = "12.8"
+
 [dependencies]
 python = "3.12.*"
-ipykernel = ">=7.1.0,<8"
 pip = ">=25.2,<26"
+pillow = ">=12.0.0,<13"
+numpy = ">=2.3.4,<3"
+
 
 [pypi-dependencies]
-torch = { version = ">=2.9.0", index = "https://download.pytorch.org/whl/cpu" }
-torchvision = { version = ">=0.24.0", index = "https://download.pytorch.org/whl/cpu" }
+sam-2 = {path = "external/sam2", editable = true}
+plotly = ">=6.4.0, <7"
+ipykernel = ">=7.1.0, <8"
+nbformat = ">=5.10.4, <6"
+torch = { version = "*", index = "https://download.pytorch.org/whl/128" }

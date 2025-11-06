@@ -1,3 +1,10 @@
 .pixi/
 .vscode/
 *.png
+frames/
+*.jpg
+*.mp4
+
+# pixi environments
+.pixi/*
+!.pixi/config.toml
