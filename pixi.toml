@@ -17,3 +17,4 @@ sam-2 = {path = "external/sam2", editable = true}
 torch = { version = ">=2.9.0", index = "https://download.pytorch.org/whl/cu128" }
 ipykernel = ">=7.1.0, <8"
 pip = ">=25.3, <26"
+supervision = ">=0.26.1, <0.27"
