@@ -22,4 +22,4 @@ sam-2 = {path = "external/sam2", editable = true}
 plotly = ">=6.4.0, <7"
 ipykernel = ">=7.1.0, <8"
 nbformat = ">=5.10.4, <6"
-torch = { version = "*", index = "https://download.pytorch.org/whl/128" }
+torch = { version = ">=2.9.0", index = "https://download.pytorch.org/whl/cu128" }
