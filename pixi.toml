@@ -2,7 +2,7 @@
 authors = ["Zain-Mrza <zzmirzazz@aol.com>"]
 channels = ["conda-forge"]
 name = "sam2laparoscopy"
-platforms = ["win-64"]
+platforms = ["win-64", "linux-64"]
 version = "0.1.0"
 
 [tasks]
@@ -18,3 +18,5 @@ torch = { version = ">=2.9.0", index = "https://download.pytorch.org/whl/cu128" 
 ipykernel = ">=7.1.0, <8"
 pip = ">=25.3, <26"
 supervision = ">=0.26.1, <0.27"
+plotly = { version = ">=6.4.0, <7", extras = ["express"] }
+nbformat = ">=5.10.4, <6"
