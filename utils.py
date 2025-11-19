@@ -3,7 +3,6 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-import supervision as sv
 import torch
 from sam2.build_sam import build_sam2_video_predictor
 
