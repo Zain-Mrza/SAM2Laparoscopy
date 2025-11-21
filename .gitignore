@@ -5,6 +5,8 @@ frames/
 *.jpg
 *.mp4
 __pycache__/
+videos/
+overlays/*
 
 # pixi environments
 .pixi/*

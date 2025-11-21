@@ -1,0 +1,6 @@
+name: sam3
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+prefix: /rhome/zmirz004/bigdata/.conda/envs/sam3
