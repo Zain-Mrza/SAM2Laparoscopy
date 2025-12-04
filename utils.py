@@ -26,6 +26,64 @@ from sam3.model_builder import build_sam3_video_model
 from sam3.model_builder import build_sam3_video_predictor
 import numpy as np
 
+from PIL import Image
+import plotly.express as px
+import plotly.graph_objects as go
+from typing import Tuple, List
+
+def plot_point_and_box(point: Tuple, box: Tuple=False, frames_path='frames'):
+
+    # Load frame
+    frame1 = f"{frames_path}/0.jpg"
+    frame = Image.open(frame1)
+
+    fig = px.imshow(frame)
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=0, b=0),
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)'
+    )
+
+    
+    if box:
+        boxx, boxy, bw, bh = box
+        x2 = boxx + bw
+        y2 = boxy + bh
+
+        # Box
+        fig.add_shape(
+            type="rect",
+            x0=boxx,
+            y0=boxy,
+            x1=x2,
+            y1=y2,
+            line=dict(color="cyan", width=3),
+            fillcolor="rgba(0,0,0,0)",
+        )
+
+    # Point (x)
+    pointx, pointy = point
+
+    fig.add_trace(go.Scatter(
+        x=[pointx],
+        y=[pointy],
+        mode='markers',
+        marker=dict(
+            symbol="cross-thin",
+            size=15,
+            opacity=1,
+            line=dict(color='red', width=2)
+        ),
+        name='Selected Point'
+    ))
+
+    # Hide axes
+    fig.update_xaxes(visible=False)
+    fig.update_yaxes(visible=False)
+
+    fig.show()
+
+
 def sam2_point_track_and_overlay(
     x: int = 1282,
     y: int = 358,
@@ -127,6 +185,20 @@ def sam2_point_track_and_overlay(
 
     writer.release()
     return output_video_path
+
+# # Example Usage:
+# out_path = sam2_point_track_and_overlay(
+#     x=700,
+#     y=500,
+#     obj_id=1,
+#     frames_path=os.path.join(ROOT_DIR, "frames"),
+#     output_video_path="overlay_supervision.mp4",
+#     fps=30,
+#     alpha=0.3
+# )
+# print("Wrote:", out_path)
+
+
 
 from pathlib import Path
 import numpy as np
