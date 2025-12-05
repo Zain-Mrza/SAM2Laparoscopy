@@ -239,15 +239,15 @@ def run_sam3_segmentation_pipeline(
 ):
     """
     Args:
-        frames_dir (str or Path): Directory containing numbered frame images.
+        frames_dir (str or Path): Directory containing numbered frame images (0-1).
         input_point (tuple): (x, y) pixel location on frame 0.
         output_video_path (str or Path): Where to save the overlaid video.
         alpha (float): Opacity of the mask overlay.
         fps (int): Framerate of the original video.
     """
-    # -------------------------
-    # Device / model setup
-    # -------------------------
+    
+    #### SETUP
+
     if device is None:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -259,18 +259,19 @@ def run_sam3_segmentation_pipeline(
     # Init state
     inference_state = predictor.init_state(video_path=str(frames_dir))
 
-    # Sort frames numerically
+    # Sort frames
     frame_files = get_numerically_sorted_frames(frames_dir)
-    # Ensure they are Path objects
+    # Make sure they are Paths
     frame_paths = [Path(f) for f in frame_files]
 
     # Get image size from the first frame
     with Image.open(frame_paths[0]) as img:
         img_width, img_height = img.size
 
-    # -------------------------
-    # Add point prompt on frame 0
-    # -------------------------
+    
+    #### POINT PROMPT
+
+
     ann_obj_id = 1
     points = np.array([input_point], dtype=np.float32)
     labels = np.array([1], np.int32)  # 1 = foreground
@@ -286,9 +287,10 @@ def run_sam3_segmentation_pipeline(
         clear_old_points=False,
     )
 
-    # -------------------------
-    # Propagate masks
-    # -------------------------
+
+    ### PROPOGATE
+
+
     print("Propagating masks...")
     video_segments = {}  # frame_idx -> (H, W) bool mask
 
@@ -305,9 +307,11 @@ def run_sam3_segmentation_pipeline(
             mask = (video_res_masks[idx] > 0.0).cpu().numpy().squeeze()
             video_segments[frame_idx] = mask
 
-    # -------------------------
-    # Create overlaid video
-    # -------------------------
+
+
+    ### OVERLAID VIDEO
+
+
     # Read first frame to get dimensions
     first_frame = cv2.imread(str(frame_paths[0]))
     if first_frame is None:
@@ -318,7 +322,7 @@ def run_sam3_segmentation_pipeline(
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     writer = cv2.VideoWriter(str(output_video_path), fourcc, fps, (w, h))
 
-    # BGR color for overlay (this is red; change to [0,255,0] for green)
+    # BGR color for overlay
     color = np.array([0, 255, 0], dtype=np.uint8)
 
     for idx, frame_path in enumerate(frame_paths):
